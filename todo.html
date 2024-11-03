@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            width: auto;
+            min-height: 100vh;
+            background: linear-gradient(135deg, lightblue, pink);
+            padding: 10px;
+        }
+        .todo {
+            width: 100%;
+            max-width: 540px;
+            background: #fff;
+            margin: 100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius: 10px;
+        }
+        .todo h1 {
+            color: blueviolet;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #edeff0;
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 10px;
+            font-size: 15px;
+        }
+        button {
+            border: none;
+            outline: none;
+            padding: 16px 50px;
+            background: #edeff0;
+            color: blue;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+        ul li {
+            list-style: none;
+            padding: 12px 8px 12px 50px;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            font-size: 20px;
+        }
+        ul li::before {
+            content: '';
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background-color: lightgray; /* Placeholder color */
+            top: 12px;
+            left: 8px;
+        }
+        ul li.checked {
+            color: #555;
+            text-decoration: line-through;
+        }
+        ul li.checked::before {
+            content: '✔'; /* Tick symbol */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: green; /* Tick color */
+            font-size: 20px;
+            background: none; /* Remove background color */
+        }
+        ul li span {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            color: #555;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+        }
+        ul li span:hover {
+            background: tomato;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="todo">
+            <h1>TODO LIST</h1>
+            <div class="row">
+                <input id="input" placeholder="Enter your task">
+                <button onclick="submitTask()">Add</button>
+            </div>
+            <ul id="ul" style="list-style-type:circle;">
+                <!-- Tasks will be added here -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        const input = document.getElementById("input");
+        const ul = document.getElementById("ul");
+
+        function submitTask() {
+            if (input.value === '') {
+                alert("Please enter the task");
+            } else {
+                let li = document.createElement("li");
+                li.innerHTML = input.value;
+                ul.appendChild(li);
+
+                let span = document.createElement("span");
+                span.innerHTML = "\u00D7"; // Unicode for "×"
+                li.appendChild(span);
+            }
+            input.value = "";
+        }
+
+        ul.addEventListener("click", function(e) {
+            if (e.target.tagName === "LI") {
+                e.target.classList.toggle("checked");
+            } else if (e.target.tagName === "SPAN") {
+                e.target.parentElement.remove();
+            }
+        });
+    </script>
+</body>
+</html>
